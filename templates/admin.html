@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Administration · Paran Bank{% endblock %}
+{% block content %}
+<div class="dashboard-wrap admin-wrap">
+  <section class="welcome-row">
+    <div><span class="eyebrow">PARAN OPERATIONS</span><h1>Account overview<span class="copper-dot">.</span></h1><p>Manage prototype customer accounts and review simulated balances.</p></div>
+    <div class="account-chip admin-chip"><span class="chip-icon" aria-hidden="true">◇</span><span><small>ACCESS LEVEL</small><strong>Administrator</strong></span></div>
+  </section>
+  <div class="admin-notice"><span aria-hidden="true">ⓘ</span><span>All accounts and balances on this page are simulated. No real funds are held or transferred.</span></div>
+  <section class="admin-layout">
+    <div class="activity-card customer-card">
+      <div class="activity-heading"><div><span class="eyebrow">CUSTOMER DIRECTORY</span><h2>Prototype accounts</h2></div><span class="activity-count">{{ customers|length }} <span>CUSTOMERS</span></span></div>
+      {% if customers %}
+        <div class="customer-list">
+          {% for customer in customers %}
+            <article class="customer-row"><span class="customer-avatar">{{ customer.username[0]|upper }}</span><div class="customer-meta"><strong>{{ customer.username }}</strong><span>Joined {{ customer.created_at.strftime('%b %d, %Y') }}</span></div><div class="customer-balance"><small>SIMULATED BALANCE</small><strong>{{ customer.balance_cents|money }}</strong></div></article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state"><span class="empty-mark" aria-hidden="true">✳</span><strong>No customer accounts yet.</strong><p>Create the first prototype account with the form beside this list.</p></div>
+      {% endif %}
+    </div>
+    <section class="admin-create-card">
+      <span class="eyebrow">ADD A CUSTOMER</span><h2>Create account</h2><p>Set up a new personal prototype account. It starts with a zero simulated balance.</p>
+      <form action="{{ url_for('create_customer') }}" method="post" class="auth-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="username">Username</label><input id="username" name="username" type="text" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" placeholder="customer_name">
+        <label for="password">Temporary password</label><input id="password" name="password" type="password" required minlength="12" maxlength="128" autocomplete="new-password" placeholder="At least 12 characters">
+        <label for="password_confirmation">Confirm password</label><input id="password_confirmation" name="password_confirmation" type="password" required minlength="12" maxlength="128" autocomplete="new-password" placeholder="Enter it again">
+        <button class="button button-primary button-wide" type="submit">Create customer <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+  </section>
+</div>
+{% endblock %}

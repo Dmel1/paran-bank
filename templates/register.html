@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Open an account · Paran Bank{% endblock %}
+{% block content %}
+<section class="auth-layout register-layout">
+  <div class="auth-panel register-panel">
+    <div class="form-intro"><span class="eyebrow">A FRESH START</span><h2>Make room<br>for what matters.</h2><p>Create your personal Paran prototype account in just a moment.</p></div>
+    <form method="post" class="auth-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="username">Choose a username</label>
+      <input id="username" name="username" type="text" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" placeholder="letters, numbers, underscores">
+      <span class="field-hint">3–32 characters. Letters, numbers, and underscores.</span>
+      <label for="password">Create a password</label>
+      <input id="password" name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="128" placeholder="At least 12 characters">
+      <label for="password_confirmation">Confirm your password</label>
+      <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required minlength="12" maxlength="128" placeholder="Enter it again">
+      <button class="button button-primary button-wide" type="submit">Create my account <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="form-switch">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+  <div class="auth-art register-art">
+    <span class="art-index">02 / A BETTER EVERYDAY</span>
+    <div class="register-stamp"><span>MAKE</span><span>IT</span><span>YOURS<span class="stamp-period">.</span></span></div>
+    <div class="register-quote"><span class="quote-line"></span><p>Small steps, steady progress.<br>A little more space to breathe.</p><span class="eyebrow">THE PARAN APPROACH</span></div>
+    <div class="leaf-shape leaf-one"></div><div class="leaf-shape leaf-two"></div>
+  </div>
+</section>
+{% endblock %}
